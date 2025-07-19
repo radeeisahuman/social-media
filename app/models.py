@@ -15,7 +15,6 @@ class Comments(Base):
 	__tablename__ = "comments"
 
 	id = Column(Integer, primary_key=True, index=True)
-	title = Column(String, index=True, nullable=False)
 	content = Column(Text, nullable=False)
 	owner_id = Column(Integer, ForeignKey('users.id'))
 	owner = relationship("Users", back_populates="comments")
