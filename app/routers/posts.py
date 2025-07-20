@@ -26,7 +26,7 @@ def get_current_user(
 	if not payload:
 		raise HTTPException(status_code=401, detail="Unauthorized")
 
-	user = db.query(Users).filter(payload['sub'] == Users.id).first()
+	user = db.query(Users).filter(payload['sub'] == Users.username).first()
 
 	if not user:
 		raise HTTPException(status_code=401, detail="Forbidden")

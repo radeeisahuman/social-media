@@ -35,3 +35,15 @@ class UserOut(BaseModel):
 class UserCreate(BaseModel):
 	username: str
 	password: str
+
+class NotificationOut(BaseModel):
+	id: int
+	content: str
+	owner_id: int
+	post_id: int
+
+	class Config:
+		orm_mode = True
+
+class NotificationCreate(BaseModel):
+	content: str

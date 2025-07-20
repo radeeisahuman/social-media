@@ -21,6 +21,14 @@ class Comments(Base):
 	post_id = Column(Integer, ForeignKey('posts.id'))
 	belongs_to = relationship("Comments", back_populates="comments")
 
+class Notifications(Base):
+	__tablename__ = "notifications"
+
+	id = Column(Integer, primary_key=True, index=True)
+	content = Column(String, nullable=False)
+	owner_id = Column(Integer, ForeignKey('users.id'))
+	post_id = Column(Integer, ForeignKey('posts.id'))
+
 class Users(Base):
 	__tablename__ = "users"
 
