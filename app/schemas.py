@@ -4,7 +4,7 @@ from typing import optional
 class PostOut(BaseModel):
 	id: int
 	title: str = Field(..., max_length=100)
-	content: str
+	content: optional[str] = ""
 	comments: list
 
 	class Config:
@@ -12,8 +12,7 @@ class PostOut(BaseModel):
 
 class PostCreate(BaseModel):
 	title: str = Field(..., max_length=100)
-	content: str
-	owner_id: int
+	content: optional[str] = ""
 
 class CommentOut(BaseModel):
 	id: int
