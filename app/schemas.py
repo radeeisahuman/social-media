@@ -5,7 +5,6 @@ class PostOut(BaseModel):
 	id: int
 	title: str = Field(..., max_length=100)
 	content: optional[str] = ""
-	comments: list
 
 	class Config:
 		orm_mode = True
@@ -17,6 +16,7 @@ class PostCreate(BaseModel):
 class CommentOut(BaseModel):
 	id: int
 	content: str
+	post_id: int
 
 	class Config:
 		orm_mode = True
