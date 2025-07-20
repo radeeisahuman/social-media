@@ -17,14 +17,13 @@ class CommentOut(BaseModel):
 	id: int
 	content: str
 	post_id: int
+	owner_id: int
 
 	class Config:
 		orm_mode = True
 
 class CommentCreate(BaseModel):
 	content: str
-	owner_id: int
-	post_id: int
 
 class UserOut(BaseModel):
 	id: int

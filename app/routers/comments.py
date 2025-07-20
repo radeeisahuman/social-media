@@ -50,3 +50,50 @@ def get_comment(comment_id: int, db: Session = Depends(get_db)):
 
 	return comment
 
+# Creating a comment
+@router.post('/{post_id}', response_model=CommentCreate)
+def create_comment(
+	comment: CommentCreate, 
+	post_id: int, 
+	db: Session = Depends(get_db), 
+	user: Users = Depends(get_current_user)):
+	new_comment = Comments(content=comment.content, post_id=post_id, owner_id=user.id)
+	db.add(new_comment)
+	db.commit()
+	db.refresh(new_comment)
+
+	return new_comment
+
+@router.delete('/{comment_id}')
+def delete_comment(
+	comment_id: int, 
+	db: Session = Depends(get_db), 
+	user: Users = Depends(get_current_user)):
+	db_comment = db.query(Comments).filter(comment_id == Comments.id, user.id == Comments.owner_id).first()
+
+	if not db_comment:
+		raise HTTPException(status_code=404, detail="Comment not found")
+
+	db.delete(db_comment)
+	db.commit()
+
+	return {'message': 'Comment deleted'}
+
+@router.put('/{comment_id}')
+def update_comment(
+	comment_id: int, 
+	comment: CommentCreate, 
+	db: Session = Depends(get_db), 
+	user: Users = Depends(get_current_user)
+	):
+	
+	db_comment = db.query(Comments).filter(comment_id == Comments.id, user.id == Comments.owner_id).first()
+
+	if not db_comment:
+		raise HTTPException(status_code=404, detail="Comment not found")
+
+	db_comment.content = comment.content
+	db.commit()
+	db.refresh(db_comment)
+
+	return db_comment
