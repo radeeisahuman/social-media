@@ -37,3 +37,10 @@ class Users(Base):
 	password = Column(String, nullable=False)
 	posts = relationship("Posts", back_populates="owner")
 	comments = relationship("Comments", back_populates="owner")
+
+class Follows(Base):
+	__tablename__ = "follows"
+
+	id = Column(Integer, primary_key=True, index=True)
+	subscriber_id = Column(Integer, ForeignKey('users.id'))
+	subscribed_id = Column(Integer, ForeignKey('users.id'))

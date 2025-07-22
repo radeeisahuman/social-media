@@ -47,3 +47,14 @@ class NotificationOut(BaseModel):
 
 class NotificationCreate(BaseModel):
 	content: str
+
+class FollowOut(BaseModel):
+	id: int
+	subscriber_id : int
+	subscribed_id: int
+
+	class Config:
+		orm_mode = True	
+
+class FollowCreate(BaseModel):
+	subscriber_id : int
